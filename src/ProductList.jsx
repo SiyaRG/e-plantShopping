@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
 import { addItem } from './CartSlice';
+import { useDispatch } from 'react-redux';  
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
-
+    const dispatch = useDispatch();
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -250,12 +251,8 @@ function ProductList({ onHomeClick }) {
     };
     const handleAddToCart = (product) => {
         dispatch(addItem(product)); 
-
-        setAddedToCart((prevState) => ({ 
-            ...prevState, 
-            [product.name]: true, 
-    }));
-};
+        alert(`${product.name} has been added to the cart!`);
+    };
 
     const handleContinueShopping = (e) => {
         e.preventDefault();
@@ -293,7 +290,7 @@ function ProductList({ onHomeClick }) {
                                     <h3 className="product-title">{plant.name}</h3>
                                     <p className="plant-description">{plant.description}</p>
                                     <p className="product-price">{plant.cost}</p>
-                                    <button className="product-button" onClick={handleCartClick}>Add to Cart</button>
+                                    <button className="product-button" onClick={() => handleAddToCart(plant)}>Add to Cart</button>
                                 </div>
                             ))}
                         </div>
